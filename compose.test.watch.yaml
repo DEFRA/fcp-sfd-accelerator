@@ -1,0 +1,3 @@
+services:
+  cdp-node-backend-template:
+    command: npm run test:watch

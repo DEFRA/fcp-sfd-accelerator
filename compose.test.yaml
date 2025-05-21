@@ -1,0 +1,27 @@
+services:
+  cdp-node-backend-template:
+    build:
+      target: development
+    image: cdp-node-backend-template-development
+    container_name: cdp-node-backend-template-test
+    command: npm run test
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: 3001
+      NODE_ENV: development
+      LOCALSTACK_ENDPOINT: http://localstack:4566
+      MONGO_URI: mongodb://mongodb:27017/
+    volumes:
+      - ./src/:/home/node/src
+      - ./test/:/home/node/test
+      - ./package.json:/home/node/package.json
+      - ./coverage:/home/node/coverage
+    networks:
+      - cdp-tenant
+
+  localstack:
+    env_file:
+      - path: .env
+        required: false
