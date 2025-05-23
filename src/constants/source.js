@@ -1,1 +1,1 @@
-export const SOURCE = 'cdp-node-backend-template'
+export const SOURCE = 'fcp-sfd-accelerator'

@@ -1,10 +1,12 @@
 services:
-  cdp-node-backend-template:
+  fcp-sfd-accelerator:
     build:
-      context: .
       target: development
+    image: fcp-sfd-accelerator-development
+    container_name: fcp-sfd-accelerator-development
     ports:
       - '3001:3001'
+      - '9232:9232'
     links:
       - 'localstack:localstack'
       - 'mongodb:mongodb'
@@ -14,12 +16,13 @@ services:
       mongodb:
         condition: service_started
     volumes:
-      - ./src:/home/node/src
+      - ./src/:/home/node/src
       - ./package.json:/home/node/package.json
     env_file:
       - .env
     environment:
-      PORT: 3001
+      PORT: 3003
+      PORT_DEBUG: 9232
       NODE_ENV: development
       LOCALSTACK_ENDPOINT: http://localstack:4566
       MONGO_URI: mongodb://mongodb:27017/
@@ -32,7 +35,7 @@ services:
       - '4566:4566' # LocalStack Gateway
       - '4510-4559:4510-4559' # external services port range
     env_file:
-      - 'compose/aws.env'
+      - .env
     environment:
       DEBUG: ${DEBUG:-1}
       LS_LOG: WARN # Localstack DEBUG Level
@@ -46,14 +49,6 @@ services:
       interval: 5s
       start_period: 5s
       retries: 3
-    networks:
-      - cdp-tenant
-
-  redis:
-    image: redis:7.2.3-alpine3.18
-    ports:
-      - '6379:6379'
-    restart: always
     networks:
       - cdp-tenant
 
@@ -73,4 +68,3 @@ volumes:
 networks:
   cdp-tenant:
     driver: bridge
-    name: cdp-tenant

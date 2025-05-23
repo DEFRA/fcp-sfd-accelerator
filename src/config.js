@@ -1,9 +1,6 @@
 import convict from 'convict'
 import convictFormatWithValidator from 'convict-format-with-validator'
 
-import { convictValidateMongoUri } from './common/helpers/convict/validate-mongo-uri.js'
-
-convict.addFormat(convictValidateMongoUri)
 convict.addFormats(convictFormatWithValidator)
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -32,7 +29,7 @@ const config = convict({
   serviceName: {
     doc: 'Api Service Name',
     format: String,
-    default: 'cdp-node-backend-template'
+    default: 'fcp-sfd-accelerator'
   },
   cdpEnvironment: {
     doc: 'The CDP environment the app is running in. With the addition of "local" for local development',
@@ -86,7 +83,7 @@ const config = convict({
     databaseName: {
       doc: 'Database name for mongodb',
       format: String,
-      default: 'cdp-node-backend-template',
+      default: 'fcp-sfd-accelerator',
       env: 'MONGO_DATABASE'
     }
   },

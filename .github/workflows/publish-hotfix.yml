@@ -34,7 +34,7 @@
 #         run: |
 #           mkdir -p coverage
 #           chmod -R a+rw ./coverage
-#           docker compose -f compose.yaml -f compose.test.yaml run --rm "cdp-node-backend-template"
+#           docker compose -f compose.yaml -f compose.test.yaml run --rm "fcp-sfd-accelerator"
 
 #       - name: Publish Hot Fix
 #         uses: DEFRA/cdp-build-action/build-hotfix@main

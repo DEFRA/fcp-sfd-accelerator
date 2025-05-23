@@ -1,6 +1,6 @@
 
 services:
-  cdp-node-backend-template:
+  fcp-sfd-accelerator:
     command: npm run start:debug
 
 networks:

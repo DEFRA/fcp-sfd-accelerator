@@ -1,26 +1,26 @@
+import { vi, describe, test, expect, beforeEach, beforeAll, afterEach, afterAll } from 'vitest'
+
 import hapi from '@hapi/hapi'
+import tls from 'node:tls'
 
-import { secureContext } from './index.js'
-import { requestLogger } from '../logging/request-logger.js'
-import { config } from '../../../config.js'
+import { config } from '../../../../../../src/config/index.js'
+import { secureContext } from '../../../../../../src/api/common/helpers/secure-context/secure-context.js'
+import { requestLogger } from '../../../../../../src/api/common/helpers/request-logger.js'
 
-const mockAddCACert = jest.fn()
-const mockTlsCreateSecureContext = jest
-  .fn()
+const mockAddCACert = vi.fn()
+const mockTlsCreateSecureContext = vi.fn()
   .mockReturnValue({ context: { addCACert: mockAddCACert } })
 
-jest.mock('hapi-pino', () => ({
-  register: (server) => {
-    server.decorate('server', 'logger', {
-      info: jest.fn(),
-      error: jest.fn()
-    })
-  },
-  name: 'mock-hapi-pino'
-}))
-jest.mock('node:tls', () => ({
-  ...jest.requireActual('node:tls'),
-  createSecureContext: (...args) => mockTlsCreateSecureContext(...args)
+vi.mock('hapi-pino', () => ({
+  default: {
+    register: (server) => {
+      server.decorate('server', 'logger', {
+        info: vi.fn(),
+        error: vi.fn()
+      })
+    },
+    name: 'mock-hapi-pino'
+  }
 }))
 
 describe('#secureContext', () => {
@@ -52,6 +52,9 @@ describe('#secureContext', () => {
   describe('When secure context is enabled', () => {
     const PROCESS_ENV = process.env
 
+    const createSecureContextSpy = vi.spyOn(tls, 'createSecureContext')
+      .mockImplementation(mockTlsCreateSecureContext)
+
     beforeAll(() => {
       process.env = { ...PROCESS_ENV }
       process.env.TRUSTSTORE_ONE = 'mock-trust-store-cert-one'
@@ -70,6 +73,7 @@ describe('#secureContext', () => {
 
     afterAll(() => {
       process.env = PROCESS_ENV
+      createSecureContextSpy.mockRestore()
     })
 
     test('Original tls.createSecureContext should have been called', () => {

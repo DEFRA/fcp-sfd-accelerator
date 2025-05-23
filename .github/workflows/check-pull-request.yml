@@ -34,14 +34,14 @@
 #       - name: Build Docker Image
 #         run: |
 #           set +e
-#           docker build --no-cache --tag cdp-node-backend-template .
+#           docker build --no-cache --tag fcp-sfd-accelerator .
 #           exit $?
 
 #       - name: Run Tests
 #         run: |
 #           mkdir -p coverage
 #           chmod -R a+rw ./coverage
-#           docker compose -f compose.yaml -f compose.test.yaml run --rm "cdp-node-backend-template"
+#           docker compose -f compose.yaml -f compose.test.yaml run --rm "fcp-sfd-accelerator"
 
 #       - name: SonarQubeScan
 #         uses: SonarSource/sonarqube-scan-action@v4

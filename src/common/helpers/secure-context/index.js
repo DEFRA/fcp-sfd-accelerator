@@ -1,2 +1,5 @@
 import { secureContext } from './secure-context.js'
-export { secureContext }
+
+export {
+  secureContext
+}

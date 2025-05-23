@@ -1,5 +1,5 @@
 {
-  "name": "cdp-node-backend-template",
+  "name": "fcp-sfd-accelerator",
   "version": "0.1.0",
   "description": "CDP Node.js Backend Template",
   "main": "src/index.js",
@@ -9,12 +9,12 @@
   },
   "scripts": {
     "pretest": "npm run test:lint",
-    "docker:debug": "docker compose -f compose.yaml -f compose.debug.yaml -p 'cdp-node-backend-template' up",
-    "docker:test": "docker compose down -v && docker compose -f compose.yaml -f compose.test.yaml run  --build --rm 'cdp-node-backend-template'",
-    "docker:test:watch": "docker compose down -v && docker compose -f compose.yaml -f compose.test.yaml -f compose.test.watch.yaml run  --build --rm 'cdp-node-backend-template'",
+    "docker:debug": "docker compose -f compose.yaml -f compose.debug.yaml -p 'fcp-sfd-accelerator' up",
+    "docker:test": "docker compose down -v && docker compose -f compose.yaml -f compose.test.yaml run  --build --rm 'fcp-sfd-accelerator'",
+    "docker:test:watch": "docker compose down -v && docker compose -f compose.yaml -f compose.test.yaml -f compose.test.watch.yaml run  --build --rm 'fcp-sfd-accelerator'",
     "test": "rm -rf ./coverage/** && vitest run --coverage",
     "test:watch": "vitest watch",
-    "test:lint": "standard",
+    "test:lint": "neostandard",
     "start:watch": "nodemon --watch src --exec 'node --experimental-vm-modules src/index.js'",
     "start:debug": "nodemon --watch src --exec 'node --experimental-vm-modules --inspect-brk=0.0.0.0:9232 src/index.js'",
     "start": "node --experimental-vm-modules src/index.js"
@@ -45,6 +45,7 @@
     "undici": "7.4.0"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "3.1.4",
     "autoprefixer": "10.4.20",
     "neostandard": "0.12.1",
     "nodemon": "3.1.7",

@@ -1,9 +1,9 @@
 services:
-  cdp-node-backend-template:
+  fcp-sfd-accelerator:
     build:
       target: development
-    image: cdp-node-backend-template-development
-    container_name: cdp-node-backend-template-test
+    image: fcp-sfd-accelerator-development
+    container_name: fcp-sfd-accelerator-test
     command: npm run test
     env_file:
       - path: .env
