@@ -8,27 +8,31 @@ const originalDescription = 'CDP Node.js Backend Template'
 const originalPort = 3000
 
 const processInput = (args) => {
-  const [, , projectName, projectDescription, port] = args
+  const [, , projectName, description, port] = args
 
   if (args.length === 2) {
-    console.error('Please enter a new name, description, and port for this project e.g. fcp-sfd-accelerator 3008')
+    console.error('Please enter a new name, description, and port for this project e.g. fcp-sfd-object-processor "The object processor for SFD" 3008')
     process.exit(1)
   }
 
-  if (args.length !== 4 || !projectName || projectName.split('-').length < 3 || !projectDescription || !port) {
+  if (args.length !== 5 || !projectName || projectName.split('-').length < 3 || !description || !port) {
     const errorMessage = [
       'Please enter a new name, description, and port for this project',
-      'The name must contain at least two hyphens and be in the form of <program>-<team>-<purpose> e.g. fcp-sfd-accelerator'
+      'The name must contain at least two hyphens and be in the form of <program>-<team>-<purpose> e.g. fcp-sfd-object-processor'
     ]
 
     console.error(errorMessage.join('\n'))
     process.exit(1)
   }
 
-  return { projectName, port }
+  return {
+    projectName,
+    description,
+    port
+  }
 }
 
-const confirmRename = async (projectName, projectDescription, port) => {
+const confirmRename = async (projectName, description, port) => {
   const affirmativeAnswer = 'y'
   const rl = readline.createInterface({
     input: process.stdin,
@@ -36,14 +40,17 @@ const confirmRename = async (projectName, projectDescription, port) => {
   })
 
   return new Promise((resolve, reject) => {
-    rl.question(`Please check the following changes are correct:
-      \nProject name: ${projectName}
-      \nProject description: ${projectDescription}
-      \nPort: ${port}?
-      \nType ${affirmativeAnswer} for yes to confirm\n`, (answer) => {
-      rl.close()
-      resolve(answer === affirmativeAnswer)
-    })
+    rl.question(
+      `Please check the following changes are correct:\n
+      Project name: ${projectName}
+      Project description: ${description}
+      Port: ${port}
+      \nType ${affirmativeAnswer} for yes to confirm\n`,
+      (answer) => {
+        rl.close()
+        resolve(answer === affirmativeAnswer)
+      }
+    )
   })
 }
 
@@ -107,7 +114,7 @@ const updateProjectName = async (projectName) => {
     ...sonarlintFiles
   ]
 
-  console.log(`\nUpdating project name from ${originalProjectName} to ${projectName} in the following files:`)
+  console.log(`\nUpdating project name in the following files:`)
   await Promise.all(filesToUpdate.map(async (file) => {
     console.log(file)
     const content = await fs.promises.readFile(file, 'utf8')
@@ -119,6 +126,19 @@ const updateProjectName = async (projectName) => {
   console.log(`Project name has been successfully updated to ${projectName}`)
 }
 
+const updateProjectDescription = async (description) => {
+  const filesToUpdate = ['package.json']
+
+  console.log(`\nUpdating project description in the following files:`)
+  await Promise.all(filesToUpdate.map(async (file) => {
+    const content = await fs.promises.readFile(file, 'utf8')
+    const updatedContent = content.replace(originalDescription, description)
+    return await fs.promises.writeFile(file, updatedContent)
+  }))
+
+  console.log(`Project description has been updated to "${description}"`)
+}
+
 const updatePort = async (port) => {
   const portFiles = getPortFiles()
   const configFiles = getConfigFiles()
@@ -128,7 +148,7 @@ const updatePort = async (port) => {
     ...configFiles
   ]
 
-  console.log(`\nUpdating port from ${originalPort} to ${port} in the following files:`)
+  console.log(`\nUpdating the port in the following files:`)
   await Promise.all(filesToUpDate.map(async (file) => {
     console.log(file)
     const content = await fs.promises.readFile(file, 'utf8')
@@ -139,11 +159,12 @@ const updatePort = async (port) => {
 }
 
 const rename = async () => {
-  const { projectName, port } = processInput(process.argv)
-  const rename = await confirmRename(projectName, port)
+  const { projectName, description, port } = processInput(process.argv)
+  const rename = await confirmRename(projectName, description, port)
 
   if (rename) {
     await updateProjectName(projectName)
+    await updateProjectDescription(description)
     await updatePort(port)
   } else {
     console.log('Unable to update project name and port')
