@@ -43,7 +43,7 @@ const confirmRename = async (projectName, description, port) => {
     rl.question(
       `Please check the following changes are correct:\n
       Project name: ${projectName}
-      Project description: ${description}
+      Description: ${description}
       Port: ${port}
       \nType ${affirmativeAnswer} for yes to confirm\n`,
       (answer) => {
@@ -129,7 +129,7 @@ const updateProjectName = async (projectName) => {
 const updateProjectDescription = async (description) => {
   const filesToUpdate = ['package.json']
 
-  console.log(`\nUpdating project description in the following files:`)
+  console.log(`\nUpdating project description in the package.json`)
   await Promise.all(filesToUpdate.map(async (file) => {
     const content = await fs.promises.readFile(file, 'utf8')
     const updatedContent = content.replace(originalDescription, description)
