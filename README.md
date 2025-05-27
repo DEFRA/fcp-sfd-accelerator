@@ -1,4 +1,4 @@
-# CDP Node.js Backend Template
+# fcp-sfd-accelerator
 
 Core delivery platform Node.js Backend Template.
 
