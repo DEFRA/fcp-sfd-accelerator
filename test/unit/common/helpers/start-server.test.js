@@ -1,11 +1,11 @@
 import { vi, describe, test, expect, beforeAll } from 'vitest'
 
 import { config } from '../../../../src/config.js'
-import { createLogger } from '../../../../src/logging/logger.js'
-import { createServer } from '../../../../src/index.js'
+import { createLogger } from '../../../../src/common/helpers/logging/logger.js'
+import { createServer } from '../../../../src/server.js'
 import { startServer } from '../../../../src/common/helpers/start-server.js'
 
-vi.mock('../../../../src/logging/logger.js', () => ({
+vi.mock('../../../../src/common/helpers/logging/logger.js', () => ({
   createLogger: vi.fn().mockReturnValue({
     info: vi.fn(),
     warn: vi.fn(),
@@ -13,7 +13,7 @@ vi.mock('../../../../src/logging/logger.js', () => ({
   })
 }))
 
-vi.mock('../../../../src/index.js', () => ({
+vi.mock('../../../../src/server.js', () => ({
   createServer: vi.fn()
 }))
 
