@@ -10,15 +10,12 @@ const originalPort = 3000
 const processInput = (args) => {
   const [, , projectName, description, port] = args
 
-  if (args.length === 2) {
-    console.error('Please enter a new name, description, and port for this project e.g. fcp-sfd-object-processor "The object processor for SFD" 3008')
-    process.exit(1)
-  }
-
-  if (args.length !== 5 || !projectName || projectName.split('-').length < 3 || !description || !port) {
+  if (args.length !== 5 || projectName.split('-').length < 3 || !projectName || !description || !port) {
     const errorMessage = [
       'Please enter a new name, description, and port for this project',
-      'The name must contain at least two hyphens and be in the form of <program>-<team>-<purpose> e.g. fcp-sfd-object-processor'
+      'The name must contain at least two hyphens and be in the form of <program>-<team>-<purpose> e.g. fcp-sfd-object-processor',
+      'The description must not be empty and be wrapped in quotes e.g. "excellent new description"',
+      'The port must not be empty e.g. 3001'
     ]
 
     console.error(errorMessage.join('\n'))
@@ -34,6 +31,7 @@ const processInput = (args) => {
 
 const confirmRename = async (projectName, description, port) => {
   const affirmativeAnswer = 'y'
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -94,7 +92,7 @@ const getConfigFiles = () => {
   return files.map(file => `${dir}/${file}`)
 }
 
-const getPortFiles = () => {
+const getPortSpecificFiles = () => {
   return [
     'compose.yaml',
     'compose.test.yaml',
@@ -117,9 +115,11 @@ const updateProjectName = async (projectName) => {
   console.log(`\nUpdating project name in the following files:`)
   await Promise.all(filesToUpdate.map(async (file) => {
     console.log(file)
+
     const content = await fs.promises.readFile(file, 'utf8')
     const projectNameRegex = new RegExp(originalProjectName, 'g')
     const updatedContent = content.replace(projectNameRegex, projectName)
+
     return await fs.promises.writeFile(file, updatedContent)
   }))
 
@@ -127,20 +127,20 @@ const updateProjectName = async (projectName) => {
 }
 
 const updateProjectDescription = async (description) => {
-  const filesToUpdate = ['package.json']
+  const file = 'package.json'
 
   console.log(`\nUpdating project description in the package.json`)
-  await Promise.all(filesToUpdate.map(async (file) => {
-    const content = await fs.promises.readFile(file, 'utf8')
-    const updatedContent = content.replace(originalDescription, description)
-    return await fs.promises.writeFile(file, updatedContent)
-  }))
+
+  const content = await fs.promises.readFile(file, 'utf8')
+  const updatedContent = content.replace(originalDescription, description)
+
+  await fs.promises.writeFile(file, updatedContent)
 
   console.log(`Project description has been updated to "${description}"`)
 }
 
 const updatePort = async (port) => {
-  const portFiles = getPortFiles()
+  const portFiles = getPortSpecificFiles()
   const configFiles = getConfigFiles()
 
   const filesToUpDate = [
@@ -149,11 +149,14 @@ const updatePort = async (port) => {
   ]
 
   console.log(`\nUpdating the port in the following files:`)
+
   await Promise.all(filesToUpDate.map(async (file) => {
     console.log(file)
+
     const content = await fs.promises.readFile(file, 'utf8')
     const portRegex = new RegExp(originalPort, 'g')
     const updatedContent = content.replace(portRegex, port)
+
     return await fs.promises.writeFile(file, updatedContent)
   }))
 }
