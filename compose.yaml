@@ -5,7 +5,7 @@ services:
     image: fcp-sfd-accelerator-development
     container_name: fcp-sfd-accelerator-development
     ports:
-      - '3001:3001'
+      - '3000:3000'
       - '9232:9232'
     links:
       - 'localstack:localstack'

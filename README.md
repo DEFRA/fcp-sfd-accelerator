@@ -192,7 +192,7 @@ docker build --target development --no-cache --tag fcp-sfd-accelerator:developme
 Run:
 
 ```bash
-docker run -e PORT=3001 -p 3001:3001 fcp-sfd-accelerator:development
+docker run -e PORT=3000 -p 3000:3000 fcp-sfd-accelerator:development
 ```
 
 ### Production image
@@ -206,7 +206,7 @@ docker build --no-cache --tag fcp-sfd-accelerator .
 Run:
 
 ```bash
-docker run -e PORT=3001 -p 3001:3001 fcp-sfd-accelerator
+docker run -e PORT=3000 -p 3000:3000 fcp-sfd-accelerator
 ```
 
 ### Docker Compose

@@ -24,7 +24,7 @@ const processInput = (args) => {
     process.exit(1)
   }
 
-  return { projectName }
+  return { projectName, port }
 }
 
 const confirmRename = async (projectName, port) => {
@@ -82,6 +82,14 @@ const getConfigFiles = () => {
   return files.map(file => `${dir}/${file}`)
 }
 
+const getPortFiles = () => {
+  return [
+    'compost.yaml',
+    'compose.test.yaml',
+    'README.md'
+  ]
+}
+
 const updateProjectName = async (projectName) => {
   const rootFiles = getRootFiles()
   const githubActions = getGitHubActions()
@@ -106,11 +114,11 @@ const updateProjectName = async (projectName) => {
 }
 
 const updatePort = async (port) => {
-  const rootFiles = getRootFiles()
+  const portFiles = getPortFiles()
   const configFiles = getConfigFiles()
 
   const filesToUpDate = [
-    ...rootFiles,
+    ...portFiles,
     ...configFiles
   ]
 
