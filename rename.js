@@ -84,8 +84,9 @@ const getConfigFiles = () => {
 
 const getPortFiles = () => {
   return [
-    'compost.yaml',
+    'compose.yaml',
     'compose.test.yaml',
+    'Dockerfile',
     'README.md'
   ]
 }
@@ -101,7 +102,7 @@ const updateProjectName = async (projectName) => {
     ...sonarlintFiles
   ]
 
-  console.log(`Updating project name from ${originalProjectName} to ${projectName} in the following files:`)
+  console.log(`\nUpdating project name from ${originalProjectName} to ${projectName} in the following files:`)
   await Promise.all(filesToUpdate.map(async (file) => {
     console.log(file)
     const content = await fs.promises.readFile(file, 'utf8')
@@ -122,7 +123,7 @@ const updatePort = async (port) => {
     ...configFiles
   ]
 
-  console.log(`Updating port from ${originalPort} to ${port} in the following files:`)
+  console.log(`\nUpdating port from ${originalPort} to ${port} in the following files:`)
   await Promise.all(filesToUpDate.map(async (file) => {
     console.log(file)
     const content = await fs.promises.readFile(file, 'utf8')

@@ -21,7 +21,7 @@ services:
     env_file:
       - .env
     environment:
-      PORT: 3003
+      PORT: 3000
       PORT_DEBUG: 9232
       NODE_ENV: development
       LOCALSTACK_ENDPOINT: http://localstack:4566
