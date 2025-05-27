@@ -4,19 +4,20 @@ import fs from 'fs'
 import readline from 'readline'
 
 const originalProjectName = 'fcp-sfd-accelerator'
+const originalDescription = 'CDP Node.js Backend Template'
 const originalPort = 3000
 
 const processInput = (args) => {
-  const [, , projectName, port] = args
+  const [, , projectName, projectDescription, port] = args
 
   if (args.length === 2) {
-    console.error('Please enter a new name and port for this project e.g. fcp-sfd-accelerator 3008')
+    console.error('Please enter a new name, description, and port for this project e.g. fcp-sfd-accelerator 3008')
     process.exit(1)
   }
 
-  if (args.length !== 4 || !projectName || projectName.split('-').length < 3 || !port) {
+  if (args.length !== 4 || !projectName || projectName.split('-').length < 3 || !projectDescription || !port) {
     const errorMessage = [
-      'Please enter a new name and port for this project',
+      'Please enter a new name, description, and port for this project',
       'The name must contain at least two hyphens and be in the form of <program>-<team>-<purpose> e.g. fcp-sfd-accelerator'
     ]
 
@@ -27,7 +28,7 @@ const processInput = (args) => {
   return { projectName, port }
 }
 
-const confirmRename = async (projectName, port) => {
+const confirmRename = async (projectName, projectDescription, port) => {
   const affirmativeAnswer = 'y'
   const rl = readline.createInterface({
     input: process.stdin,
@@ -35,7 +36,11 @@ const confirmRename = async (projectName, port) => {
   })
 
   return new Promise((resolve, reject) => {
-    rl.question(`Do you want to rename this project to ${projectName} and update the port to be ${port}?\nType ${affirmativeAnswer} for yes to confirm\n`, (answer) => {
+    rl.question(`Please check the following changes are correct:
+      \nProject name: ${projectName}
+      \nProject description: ${projectDescription}
+      \nPort: ${port}?
+      \nType ${affirmativeAnswer} for yes to confirm\n`, (answer) => {
       rl.close()
       resolve(answer === affirmativeAnswer)
     })
