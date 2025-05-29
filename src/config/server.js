@@ -1,12 +1,14 @@
-import convict from 'convict'
-import convictFormatWithValidator from 'convict-format-with-validator'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import environments from '../constants/environments.js'
 
-convict.addFormats(convictFormatWithValidator)
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const isProduction = process.env.NODE_ENV === 'production'
-const isTest = process.env.NODE_ENV === 'test'
+const isProduction = process.env.NODE_ENV === environments.PRODUCTION
+const isDev = process.env.NODE_ENV === environments.DEVELOPMENT
+const isTest = process.env.NODE_ENV === environments.TEST
 
-const config = convict({
+export const serverConfig = {
   serviceVersion: {
     doc: 'The service version, this variable is injected into your docker container in CDP environments',
     format: String,
@@ -30,6 +32,11 @@ const config = convict({
     doc: 'Api Service Name',
     format: String,
     default: 'fcp-sfd-accelerator'
+  },
+  root: {
+    doc: 'Project root',
+    format: String,
+    default: path.resolve(dirname, '../..')
   },
   cdpEnvironment: {
     doc: 'The CDP environment the app is running in. With the addition of "local" for local development',
@@ -114,8 +121,4 @@ const config = convict({
       env: 'TRACING_HEADER'
     }
   }
-})
-
-config.validate({ allowed: 'strict' })
-
-export { config }
+}

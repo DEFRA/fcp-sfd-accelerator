@@ -1,6 +1,6 @@
 import { vi, describe, test, expect, beforeAll } from 'vitest'
 
-import { config } from '../../../../src/config.js'
+import { config } from '../../../../src/config/index.js'
 import { createLogger } from '../../../../src/common/helpers/logging/logger.js'
 import { createServer } from '../../../../src/server.js'
 import { startServer } from '../../../../src/common/helpers/start-server.js'

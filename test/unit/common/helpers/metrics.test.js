@@ -1,6 +1,6 @@
 import { vi, describe, test, expect, beforeEach } from 'vitest'
 
-import { config } from '../../../../src/config.js'
+import { config } from '../../../../src/config/index.js'
 
 import { createLogger } from '../../../../src/common/helpers/logging/logger.js'
 import { createMetricsLogger, StorageResolution, Unit } from 'aws-embedded-metrics'

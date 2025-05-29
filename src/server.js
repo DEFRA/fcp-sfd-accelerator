@@ -1,7 +1,7 @@
 import path from 'path'
 import hapi from '@hapi/hapi'
 
-import { config } from './config.js'
+import { config } from './config/index.js'
 import { requestLogger } from './common/helpers//logging/request-logger.js'
 import { secureContext } from './common/helpers/secure-context/index.js'
 import { pulse } from './common/helpers/pulse.js'
@@ -42,8 +42,7 @@ const createServer = async () => {
     requestLogger,
     requestTracing,
     secureContext,
-    pulse,
-    router
+    pulse
   ])
 
   return server

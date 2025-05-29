@@ -86,8 +86,8 @@ const getSonarlintFiles = () => {
 }
 
 const getConfigFiles = () => {
-  const dir = 'src'
-  const files = ['config.js']
+  const dir = 'src/config'
+  const files = ['server.js']
 
   return files.map(file => `${dir}/${file}`)
 }

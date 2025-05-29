@@ -3,7 +3,7 @@ import { vi, describe, test, expect, beforeEach, beforeAll, afterEach, afterAll 
 import hapi from '@hapi/hapi'
 import tls from 'node:tls'
 
-import { config } from '../../../../../src/config.js'
+import { config } from '../../../../../src/config/index.js'
 import { secureContext } from '../../../../../src/common/helpers/secure-context/secure-context.js'
 import { requestLogger } from '../../../../../src/common/helpers/logging/request-logger.js'
 
