@@ -1,10 +1,10 @@
 import { vi, describe, test, expect, beforeEach } from 'vitest'
 
-import { config } from '../../../../src/config/index.js'
+import { config } from '../../../../../src/config/index.js'
 
-import { createLogger } from '../../../../src/common/helpers/logging/logger.js'
+import { createLogger } from '../../../../../src/logging/logger.js'
 import { createMetricsLogger, StorageResolution, Unit } from 'aws-embedded-metrics'
-import { metricsCounter } from '../../../../src/common/helpers/metrics.js'
+import { metricsCounter } from '../../../../../src/api/common/helpers/metrics.js'
 
 vi.mock('aws-embedded-metrics', async (originalImport) => {
   const actual = await originalImport()
@@ -18,7 +18,7 @@ vi.mock('aws-embedded-metrics', async (originalImport) => {
   }
 })
 
-vi.mock('../../../../src/common/helpers/logging/logger.js', () => ({
+vi.mock('../../../../../src/logging/logger.js', () => ({
   createLogger: vi.fn().mockReturnValue({
     info: vi.fn(),
     warn: vi.fn(),

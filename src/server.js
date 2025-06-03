@@ -2,11 +2,11 @@ import path from 'path'
 import hapi from '@hapi/hapi'
 
 import { config } from './config/index.js'
-import { requestLogger } from './common/helpers//logging/request-logger.js'
-import { secureContext } from './common/helpers/secure-context/index.js'
-import { pulse } from './common/helpers/pulse.js'
-import { requestTracing } from './common/helpers/request-tracing.js'
-import { setupProxy } from './common/helpers/proxy/setup-proxy.js'
+import { requestLogger } from './logging/request-logger.js'
+import { secureContext } from './api/common/helpers/secure-context/index.js'
+import { pulse } from './api/common/helpers/pulse.js'
+import { requestTracing } from './api/common/helpers/request-tracing.js'
+import { setupProxy } from './api/common/helpers/proxy/setup-proxy.js'
 
 const createServer = async () => {
   setupProxy()
