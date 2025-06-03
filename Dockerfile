@@ -15,7 +15,7 @@ COPY --chown=node:node package*.json ./
 RUN npm install
 COPY --chown=node:node ./src ./src
 
-CMD [ "npm", "run", "docker:dev" ]
+CMD [ "npm", "run", "start:watch" ]
 
 FROM defradigital/node:${PARENT_VERSION} AS production
 ARG PARENT_VERSION
@@ -24,7 +24,8 @@ LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
 # Add curl to template.
 # CDP PLATFORM HEALTHCHECK REQUIREMENT
 USER root
-RUN apk add --no-cache curl
+RUN apk update && \
+    apk add curl
 USER node
 
 COPY --from=development /home/node/package*.json ./
@@ -36,4 +37,4 @@ ARG PORT
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-CMD [ "node", "src" ]
+CMD [ "node", "." ]
