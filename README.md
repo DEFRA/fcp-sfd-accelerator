@@ -1,16 +1,41 @@
 # fcp-sfd-accelerator
 
-The accelerator repository is designed to streamline the setup of GitHub repositories for the Single Front Door (SFD) team.
+The accelerator repository is designed to streamline the setup of GitHub repositories (specifically backend microservices) for the Single Front Door (SFD) team to deploy on CDP (Core Delivery Platform).
 
 ## Initial setup
 
-This repo comes with a `rename` script that will update the project name, package description, port for local development.
+### Pushing the accelerator
 
-To intiate the script, the command must be executed as shown in the example below:
+As CDP repositories _must_ be created via the CDP portal, setting up a template GitHub repository in the traditional sense (similar to what is/was done on the Farming and Countryside Platform) is not possible. Instead this repository has been created with the specific project layout that meets the needs of the SFD development team and differs from the default [CDP Node.js backend template](https://github.com/DEFRA/cdp-node-backend-template). A Bash script is provided in this repo to automate applying the accelerator template onto a CDP generated repository. The following steps detail what needs to be done:
+1. Create a new repo on the [CDP portal](https://portal.cdp-int.defra.cloud) with the parameters `Microservice` and `Node.js Backend`.
+2. Once the repo has been created, ensure you have a copy of the [`accelerator`](./accelerator.sh) script to hand.
+3. Execute the `accelerator` script by running the following command:
+```Bash
+./accelerator.sh <template-repo-url> <target-repo-url> [target-branch]
 ```
-./rename.js fcp-sfd-example 'this is an example repo' 3002
+E.g.:
+```bash
+./accelerator.sh https://github.com/DEFRA/fcp-sfd-accelerator.git https://github.com/DEFRA/fcp-sfd-example.git template-setup
+```
+**All 3 arguments must be provided to run the script successfully.**
+
+4. The following confirmation should appear in the terminal output if successful:
+```bash
+fcp-sfd-accelerator has been pushed to branch 'test-branch' on https://github.com/DEFRA/fcp-sfd-example.git
+```
+5. Once complete, the `accelerator.sh` file can be deleted.
+
+### Renaming
+
+This repo comes with a [`rename`](./rename.js) script that will update the project name, package description, and port for local development.
+
+To execute the script, run the following command:
+```
+./rename.js fcp-sfd-example 'this is an example repo' 3001
 ```
 Note the project description must be wrapped in quotes.
+
+Once complete, the `rename.js` file can be deleted.
 
 ## Requirements
 
@@ -60,9 +85,9 @@ To mimic the application running in `production` mode locally run:
 npm start
 ```
 
-### Npm scripts
+### NPM scripts
 
-All available Npm scripts can be seen in [package.json](./package.json).
+All available NPM scripts can be seen in [package.json](./package.json).
 To view them in your command line run:
 
 ```bash
