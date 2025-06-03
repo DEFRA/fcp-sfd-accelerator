@@ -23,7 +23,6 @@ E.g.:
 ```bash
 fcp-sfd-accelerator has been pushed to branch 'test-branch' on https://github.com/DEFRA/fcp-sfd-example.git
 ```
-5. Once complete, the `accelerator.sh` file can be deleted.
 
 ### Renaming
 
@@ -35,7 +34,12 @@ To execute the script, run the following command:
 ```
 Note the project description must be wrapped in quotes.
 
-Once complete, the `rename.js` file can be deleted.
+### Deleting setup scripts
+
+Once both the `accelerator.sh` and `rename.js` scripts have served their purpose, they should be deleted:
+```bash
+rm accelerator.sh rename.js
+```
 
 ## Requirements
 
