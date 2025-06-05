@@ -112,7 +112,7 @@ const updateProjectName = async (projectName) => {
     ...sonarlintFiles
   ]
 
-  console.log(`\nUpdating project name in the following files:`)
+  console.log('\nUpdating project name in the following files:')
   await Promise.all(filesToUpdate.map(async (file) => {
     console.log(file)
 
@@ -129,7 +129,7 @@ const updateProjectName = async (projectName) => {
 const updateProjectDescription = async (description) => {
   const file = 'package.json'
 
-  console.log(`\nUpdating project description in the package.json`)
+  console.log('\nUpdating project description in the package.json')
 
   const content = await fs.promises.readFile(file, 'utf8')
   const updatedContent = content.replace(originalDescription, description)
@@ -148,7 +148,7 @@ const updatePort = async (port) => {
     ...configFiles
   ]
 
-  console.log(`\nUpdating the port in the following files:`)
+  console.log('\nUpdating the port in the following files:')
 
   await Promise.all(filesToUpDate.map(async (file) => {
     console.log(file)
