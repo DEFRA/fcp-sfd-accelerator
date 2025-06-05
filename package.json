@@ -14,7 +14,7 @@
     "docker:test:watch": "docker compose down -v && docker compose -f compose.yaml -f compose.test.yaml -f compose.test.watch.yaml run  --build --rm 'fcp-sfd-accelerator'",
     "test": "rm -rf ./coverage/** && vitest run --coverage",
     "test:watch": "vitest watch",
-    "test:lint": "neostandard",
+    "test:lint": "npx eslint",
     "start:watch": "nodemon --watch src --exec 'node --experimental-vm-modules src/index.js'",
     "start:debug": "nodemon --watch src --exec 'node --experimental-vm-modules --inspect-brk=0.0.0.0:9232 src/index.js'",
     "start": "node --experimental-vm-modules src/index.js"
