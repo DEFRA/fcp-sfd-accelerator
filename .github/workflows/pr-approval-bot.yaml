@@ -6,7 +6,7 @@ on:
 
 jobs:
   comment-on-approval:
-    if: github.event.review.state === 'approved'
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - name: Post a comment on approval
@@ -15,4 +15,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue_number: ${{ github.event.pull_request.number }}
           body: |
-            Your PR is now approved. Before merging, be sure to include `#patch` or `#major` in your commit message if merging either a patch or major version. This will ensure CDP deploys the correct version. Thank you.
+            Your PR is now approved. 
+            Before merging, be sure to include `#patch` or `#major` in your commit message if merging either a patch or major version. 
+            This will ensure CDP deploys the correct version. Thank you.
