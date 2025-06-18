@@ -1,0 +1,18 @@
+name: PR Approval Bot
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  comment-on-approval:
+    if: github.event.review.state === 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post a comment on approval
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue_number: ${{ github.event.pull_request.number }}
+          body: |
+            Your PR is now approved. Before merging, be sure to include either `#patch` or `#major` if merging either a patch or major version to ensure CDP deploys the correct version. Thank you.
