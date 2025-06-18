@@ -19,4 +19,5 @@ jobs:
             Before merging, be sure to include `#patch` or `#major` in your commit message if merging either a patch or major version.  
             If merging a minor version, nothing needs to be done as these are automatically handled and deployed by CDP.  
             This will ensure CDP deploys the correct version.  
+            Full details can be found via the [CDP documentation](https://portal.cdp-int.defra.cloud/documentation/how-to/microservices.md?q=bump%20a%20either%20the%20major%20or%20patch%20version%2C%20push%20a%20commit%20with#versioning-your-microservice).  
             Thank you. 👍
