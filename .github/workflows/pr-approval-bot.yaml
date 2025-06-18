@@ -17,5 +17,6 @@ jobs:
           body: |
             **Your PR is now approved 🎉**  
             Before merging, be sure to include `#patch` or `#major` in your commit message if merging either a patch or major version.  
+            If merging a minor version, nothing needs to be done as these are automatically handled/deployed by CDP.  
             This will ensure CDP deploys the correct version.  
             Thank you. 👍
