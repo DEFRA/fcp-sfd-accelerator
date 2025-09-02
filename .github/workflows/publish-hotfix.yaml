@@ -42,6 +42,6 @@
 #           github-token: ${{ secrets.GITHUB_TOKEN }}
 
 #       - name: SonarQubeScan
-#         uses: SonarSource/sonarqube-scan-action@v4
+#         uses: SonarSource/sonarqube-scan-action@v5
 #         env: 
 #           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
