@@ -23,9 +23,7 @@ echo "Creating new branch '$TARGET_BRANCH'..."
 git checkout -b "$TARGET_BRANCH"
 
 echo "Deleting all files except .git..."
-shopt -s extglob
-rm -rf !(.git)
-shopt -u extglob
+find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
 echo "Cloning template repo (accelerator) without history..."
 git clone --depth=1 "$TEMPLATE_REPO" "$TEMP_TEMPLATE_DIR"
