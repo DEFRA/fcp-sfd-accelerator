@@ -21,8 +21,14 @@ cd "$TEMP_DIR"
 echo "Creating target branch '$TARGET_BRANCH'..."
 git checkout -b "$TARGET_BRANCH"
 
-echo "Pulling template repo into target repo..."
-git pull "$TARGET_BRANCH" main --allow-unrelated-histories
+echo "Adding template repo as a remote..."
+git remote add template "$TEMPLATE_REPO"
+
+echo "Fetching template repo..."
+git fetch template
+
+echo "Merging template repo 'main' branch into '$TARGET_BRANCH'..."
+git merge template/main --allow-unrelated-histories
 
 echo "Pushing new branch to target repo..."
 git push -u origin "$TARGET_BRANCH"
