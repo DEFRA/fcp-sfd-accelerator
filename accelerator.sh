@@ -14,26 +14,18 @@ TARGET_BRANCH="${3:-template-setup}"
 
 TEMP_DIR=$(mktemp -d)
 
-echo "Cloning template repo without history..."
-git clone --depth=1 "$TEMPLATE_REPO" "$TEMP_DIR"
+echo "Cloning target repo..."
+git clone "$TARGET_REPO" "$TEMP_DIR"
 cd "$TEMP_DIR"
 
-echo "Removing Git history..."
-rm -rf .git
-
-echo "Initialising new Git repo..."
-git init
-git remote add origin "$TARGET_REPO"
+echo "Creating target branch '$TARGET_BRANCH'..."
 git checkout -b "$TARGET_BRANCH"
 
-echo "Adding and committing files..."
-git add .
-git commit -m "Initial commit from fcp-sfd-accelerator into '$TARGET_BRANCH' on $TARGET_REPO"
+echo "Pulling template repo into target repo..."
+git pull "$TARGET_BRANCH" main --allow-unrelated-histories
 
-echo "Pushing to '$TARGET_BRANCH' on target repo..."
+echo "Pushing new branch to target repo..."
 git push -u origin "$TARGET_BRANCH"
-
-echo "fcp-sfd-accelerator has been pushed to branch '$TARGET_BRANCH' on $TARGET_REPO"
 
 cd ..
 rm -rf "$TEMP_DIR"
