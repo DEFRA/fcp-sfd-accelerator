@@ -13,29 +13,27 @@ TARGET_REPO="$2"
 TARGET_BRANCH="${3:-template-setup}"
 
 TEMP_DIR=$(mktemp -d)
-TEMPLATE_DIR=$(mktemp -d)
 
-echo "Cloning target repo..."
-git clone "$TARGET_REPO" "$TEMP_DIR"
+echo "Cloning template repo without history..."
+git clone --depth=1 "$TEMPLATE_REPO" "$TEMP_DIR"
 cd "$TEMP_DIR"
 
-echo "Creating new branch '$TARGET_BRANCH'..."
+echo "Removing Git history..."
+rm -rf .git
+
+echo "Initialising new Git repo..."
+git init
+git remote add origin "$TARGET_REPO"
 git checkout -b "$TARGET_BRANCH"
-
-echo "Cloning template repo (accelerator) without history..."
-git clone --depth=1 "$TEMPLATE_REPO" "$TEMPLATE_DIR"
-
-echo "Copying files from template repo to target branch..."
-rsync -av --exclude='.git' "$TEMPLATE_DIR"/ ./
 
 echo "Adding and committing files..."
 git add .
-git commit -m "Apply fcp-sfd-accelerator template to '$TARGET_BRANCH'"
+git commit -m "Initial commit from fcp-sfd-accelerator into '$TARGET_BRANCH' on $TARGET_REPO"
 
-echo "Pushing branch '$TARGET_BRANCH' to target repo..."
+echo "Pushing to '$TARGET_BRANCH' on target repo..."
 git push -u origin "$TARGET_BRANCH"
 
-echo "Accelerator template has been applied to branch '$TARGET_BRANCH' on $TARGET_REPO"
+echo "fcp-sfd-accelerator has been pushed to branch '$TARGET_BRANCH' on $TARGET_REPO"
 
 cd ..
-rm -rf "$TEMP_DIR" "$TEMPLATE_DIR"
+rm -rf "$TEMP_DIR"
