@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22",
+    "npm": ">=11.10.0"
   },
   "scripts": {
     "pretest": "npm run test:lint",
@@ -28,7 +29,7 @@
     "@hapi/hapi": "21.3.12",
     "aws-embedded-metrics": "4.2.0",
     "aws4": "1.13.2",
-    "convict": "6.2.4",
+    "convict": "6.2.5",
     "convict-format-with-validator": "6.2.0",
     "global-agent": "3.0.0",
     "hapi-pino": "12.1.0",
@@ -41,7 +42,7 @@
     "node-fetch": "3.3.2",
     "pino": "9.5.0",
     "pino-pretty": "13.0.0",
-    "undici": "7.4.0"
+    "undici": "7.25.0"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "3.1.4",
